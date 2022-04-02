@@ -48,7 +48,7 @@ export default {
         />
         <label class="form-item__label" for="temperature">Температура</label>
       </div>
-      <button @click.prevent="saveRecords">Сохранить</button>
+      <button @click.prevent="saveRecord">Сохранить</button>
     </form>
   </div>
 </template>
