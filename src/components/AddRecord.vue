@@ -3,7 +3,7 @@ import { mapMutations } from 'vuex';
 export default {
   data() {
     return {
-      temperature: 0,
+      temperature: '',
       list: [1, 2, 4],
     };
   },
@@ -37,18 +37,19 @@ export default {
 
 <template>
   <div>
-    <h1>страница добавления/удаления показаний</h1>
+    <h1 class="h1">Добавить запись</h1>
     <form action="" class="form">
       <div class="form-item">
+        <label class="form-item__label" for="temperature">Температура</label>
         <input
           class="form-item__input"
           type="text"
           id="temperature"
           v-model="temperature"
+          placeholder="Введите данные"
         />
-        <label class="form-item__label" for="temperature">Температура</label>
       </div>
-      <button @click.prevent="saveRecord">Сохранить</button>
+      <button class="button" @click.prevent="saveRecord">Сохранить</button>
     </form>
   </div>
 </template>
@@ -58,6 +59,9 @@ export default {
   flex-direction: column;
   width: 100%;
   height: 70px;
+}
+.form-item__input {
+  padding: 6px 5px;
 }
 </style>
 >

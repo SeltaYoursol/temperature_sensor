@@ -1,12 +1,12 @@
 <script setup>
-import { RouterLink, RouterView } from "vue-router";
+import { RouterLink, RouterView } from 'vue-router';
 </script>
 
 <template>
   <header>
     <nav>
-      <RouterLink class="nav-link" to="/">List</RouterLink>
-      <RouterLink class="nav-link" to="/edit">Edit</RouterLink>
+      <RouterLink class="nav-link" to="/">Показания</RouterLink>
+      <RouterLink class="nav-link" to="/edit">Добавить запись</RouterLink>
     </nav>
   </header>
   <div class="wrapper">
@@ -15,10 +15,12 @@ import { RouterLink, RouterView } from "vue-router";
 </template>
 
 <style>
-@import "@/assets/base.css";
+@import '@/assets/base.css';
 
 nav {
   display: flex;
+  justify-content: flex-end;
+  align-items: center;
   height: 60px;
   padding: 10px;
   width: 100%;
@@ -27,9 +29,8 @@ nav {
   box-shadow: 2px 2px 2px 1px rgb(0 0 0 / 8%);
 }
 .nav-link {
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: bold;
-  font-size: 26px;
+  font-weight: lighter;
+  font-size: 18px;
   text-decoration: none;
   color: #000;
 }
@@ -38,7 +39,7 @@ nav {
   color: gray;
 }
 .wrapper {
-  padding: 10px;
+  padding: 40px;
   display: flex;
 }
 </style>
