@@ -1,14 +1,32 @@
 <script>
+import { mapMutations } from 'vuex';
+import BasicForm from './BasicForm.vue';
 export default {
+  components: { BasicForm },
   data() {
     return {
       temperature: '',
-      editRecord: false,
+      editRecordActive: false,
+      currentID: '',
     };
   },
   computed: {
     recordsList() {
       return this.$store.state.recordsList;
+    },
+    filteredRecordsList() {
+      return this.$store.getters.filteredRecordsList;
+    },
+  },
+  methods: {
+    ...mapMutations(['editCurrentRecord', 'deleteRecord']),
+    editRecord(value, id) {
+      this.currentID = id;
+      this.editCurrentRecord({ id: id, value: value });
+    },
+    startEditing(id) {
+      this.editRecordActive = !this.editRecordActive;
+      this.currentID = id;
     },
   },
 };
@@ -17,36 +35,30 @@ export default {
   <div>
     <h1 class="h1">Показания</h1>
     <div v-if="recordsList.length > 0" class="list">
-      <div v-for="record in recordsList" class="list-item" :key="record.id">
+      <div
+        v-for="record in filteredRecordsList"
+        class="list-item"
+        :key="record.id"
+      >
         <div class="value">
           <span><b>ID:</b> {{ record.id }}</span>
           <span><b>Температура: </b> {{ record.temperature }} °C</span>
-          <span><b>Дата обновления:</b>{{ record.date }}</span>
-          <div v-if="editRecord" class="edit-form">
-            <form action="" class="form">
-              <div class="form-item">
-                <label class="form-item__label" for="temperature"
-                  >Температура</label
-                >
-                <input
-                  class="form-item__input"
-                  type="text"
-                  id="temperature"
-                  v-model="temperature"
-                  placeholder="Введите данные"
-                />
-              </div>
-              <button class="button" @click.prevent="saveRecord">
-                Сохранить
-              </button>
-            </form>
-          </div>
+          <span><b>Дата обновления: </b>{{ record.date }}</span>
+          <BasicForm
+            v-if="editRecordActive && record.id === currentID"
+            :saveHandler="editRecord"
+            :value="temperature"
+            title="Температура"
+            :id="record.id"
+          />
         </div>
         <div class="tools">
-          <button class="button" @click="editRecord = !editRecord">
+          <button class="button" @click="startEditing(record.id)">
             Редактировать
           </button>
-          <button class="button">Удалить</button>
+          <button class="button" @click="deleteRecord({ id: record.id })">
+            Удалить
+          </button>
         </div>
       </div>
     </div>

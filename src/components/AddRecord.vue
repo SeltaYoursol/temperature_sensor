@@ -5,6 +5,7 @@ export default {
   data() {
     return {
       temperature: '',
+      success: false,
     };
   },
   computed: {
@@ -28,6 +29,12 @@ export default {
         id: this.generateId(),
         temperature: value,
       });
+      this.showMessage();
+    },
+
+    showMessage() {
+      this.success = true;
+      setTimeout(() => (this.success = false), 2000);
     },
   },
   components: { BasicForm },
@@ -43,6 +50,22 @@ export default {
       title="Температура"
       id="temperature"
     />
+
+    <div v-if="success" class="message">Запись успешно создана!</div>
   </div>
 </template>
-<style scoped></style>
+<style scoped>
+.message {
+  width: 400px;
+  text-align: center;
+  padding: 9px 10px;
+  border-radius: 5px;
+  border: 1px solid green;
+  background: #90ee9075;
+  color: darkgreen;
+  position: fixed;
+  top: 28%;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+</style>
