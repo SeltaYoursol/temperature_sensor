@@ -1,10 +1,10 @@
 <script>
 import { mapMutations } from 'vuex';
+import BasicForm from './BasicForm.vue';
 export default {
   data() {
     return {
       temperature: '',
-      list: [1, 2, 4],
     };
   },
   computed: {
@@ -14,8 +14,7 @@ export default {
   },
   methods: {
     ...mapMutations(['createRecord']),
-
-    //genereting unique id for each record
+    //generating unique id for each record
     generateId(id = 0) {
       if (!this.recordsList.find((item) => item.id === id)) {
         return id;
@@ -24,44 +23,26 @@ export default {
         return this.generateId(rd);
       }
     },
-
-    saveRecord() {
+    saveRecord(value) {
       this.createRecord({
         id: this.generateId(),
-        temperature: this.temperature,
+        temperature: value,
       });
     },
   },
+  components: { BasicForm },
 };
 </script>
 
 <template>
   <div>
     <h1 class="h1">Добавить запись</h1>
-    <form action="" class="form">
-      <div class="form-item">
-        <label class="form-item__label" for="temperature">Температура</label>
-        <input
-          class="form-item__input"
-          type="text"
-          id="temperature"
-          v-model="temperature"
-          placeholder="Введите данные"
-        />
-      </div>
-      <button class="button" @click.prevent="saveRecord">Сохранить</button>
-    </form>
+    <BasicForm
+      :saveHandler="saveRecord"
+      :value="temperature"
+      title="Температура"
+      id="temperature"
+    />
   </div>
 </template>
-<style scoped>
-.form-item {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 70px;
-}
-.form-item__input {
-  padding: 6px 5px;
-}
-</style>
->
+<style scoped></style>
